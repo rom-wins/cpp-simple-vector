@@ -1,5 +1,6 @@
 #pragma once
 #include "array_ptr.h"
+#include <cassert>
 #include <initializer_list>
 #include <iterator>
 #include <stdexcept>
@@ -16,6 +17,7 @@ public:
 
 ReserveProxyObj Reserve(size_t capacity_to_reserve);
 
+
 template <typename Type>
 class SimpleVector {
 public:
@@ -23,44 +25,44 @@ public:
     using ConstIterator = const Type*;
 
     SimpleVector() noexcept = default;
-
+    
     // Создаёт вектор из size элементов, инициализированных значением по умолчанию
-    explicit SimpleVector(size_t size) {
-        if (size == 0)
-        {
-            return;
-        }
-        ArrayPtr<Type> new_ptr(size);
+    explicit SimpleVector(size_t size) : size_(size), capasity_(size) {
+        if (size == 0) 
+        { 
+            return; 
+        } 
         
-        for (size_t i = 0; i < size; ++i)
-        {
-            new_ptr[i] = std::move(Type{});
-        }
-        
-        ptr_.swap(new_ptr);
-        size_ = size;
-        capasity_ = size;
+        ArrayPtr<Type> new_ptr(size); 
+
+        std::generate(new_ptr.Get(), new_ptr.Get() + size, []() {
+                        return std::move(Type{});
+                    });
+
+        ptr_.swap(new_ptr); 
     }
+        
+    /*
+    // Данная реализация не принимается тестирующей системой.
+    // Метод Resize работает неправильно, когда в векторе хранятся объекты, не поддерживающие копирование.
+    // Тест №37.
+    explicit SimpleVector(size_t size) : SimpleVector(size, std::move(Type{})) {}
+    */
 
     // Создаёт вектор из size элементов, инициализированных значением value
     template<class Item>
-    SimpleVector(size_t size, Item&& value) {
-       
+    SimpleVector(size_t size, Item&& value) : size_(size), capasity_(size){ 
         if (size == 0)
         {
             return;
         }
         ArrayPtr<Type> new_ptr(size);
         
-        for (size_t i = 0; i < size; ++i)
-        {
-            new_ptr[i] = std::move(value);
-        }
-        
-        ptr_.swap(new_ptr);
-        size_ = size;
-        capasity_ = size;
- 
+        std::generate(new_ptr.Get(), new_ptr.Get() + size, [&value]() {
+                        return std::move(value);
+                    });
+                    
+        ptr_.swap(new_ptr); 
     }
 
     // Создаёт вектор из std::initializer_list
@@ -77,8 +79,7 @@ public:
         other.size_ = 0;
     }
     
-    SimpleVector(ReserveProxyObj rpobj)
-    {
+    SimpleVector(ReserveProxyObj rpobj) {
         Reserve(rpobj.capacity_to_reserve_);
     }
 
@@ -121,8 +122,11 @@ public:
     // вместимость вектора должна увеличиться вдвое, а для вектора вместимостью 0 стать равной 1
     template<class Item>
     Iterator Insert(ConstIterator cpos, Item&& value) {
+        Iterator pos = const_cast<Type*>(cpos);
+       
+        // UB ?
+        assert(begin() <= pos && pos <= end());
 
-        auto pos = const_cast<Type*>(cpos);
         size_t pos_index = std::distance(begin(), pos);
 
         if (size_ == capasity_)
@@ -145,17 +149,24 @@ public:
         ++size_;
 
         return ptr_.Get() + pos_index;
-    } 
+    }
+
     // Удаляет элемент вектора в указанной позиции
     Iterator Erase(ConstIterator cpos) {
-        Iterator pos = const_cast<Type*>(cpos);
+        Iterator pos = const_cast<Type*>(cpos); 
+       
+        // UB ?
+        assert(begin() <= pos && pos < end());
+        
         std::copy(std::make_move_iterator(pos + 1), std::make_move_iterator(end()), pos);
         --size_;
+        
         return pos;
     }
     
     // "Удаляет" последний элемент вектора. Вектор не должен быть пустым
     void PopBack() noexcept {
+        assert(size_ != 0);
         --size_;
     }
 
@@ -183,11 +194,13 @@ public:
 
     // Возвращает ссылку на элемент с индексом index
     Type& operator[](size_t index) noexcept {
+        assert(index < size_);
         return ptr_[index];
     }
 
     // Возвращает константную ссылку на элемент с индексом index
     const Type& operator[](size_t index) const noexcept {
+        assert(index < size_);
         return ptr_[index];
     }
 
@@ -237,8 +250,7 @@ public:
         capasity_ = new_capasity;
     }
     
-    void Reserve(size_t new_capacity)
-    {
+    void Reserve(size_t new_capacity) {
         if (new_capacity > capasity_)
         {
             auto new_ptr = ArrayPtr<Type>(new_capacity);
@@ -289,14 +301,12 @@ private:
     ArrayPtr<Type> ptr_;
 
     template<class Iter>
-    void CreateBySizeAndIter(size_t size, Iter start, Iter end)
-    {
+    void CreateBySizeAndIter(size_t size, Iter start, Iter end) {
         if (size == 0)
         {
             return;
         }
         ArrayPtr<Type> new_ptr(size);
-
         std::copy(start, end, new_ptr.Get());
         ptr_.swap(new_ptr);
         size_ = size;

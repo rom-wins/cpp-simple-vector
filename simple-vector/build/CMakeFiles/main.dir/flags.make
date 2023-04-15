@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/romwins/code/yandex_prac/study/simple_vector/include
+CXX_INCLUDES = -I/home/romwins/code/yandex_prac/git_projects/cpp-simple-vector/simple-vector/include
 
 CXX_FLAGS = 
 

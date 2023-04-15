@@ -1,4 +1,4 @@
-# Install script for directory: /home/romwins/code/yandex_prac/study/simple_vector
+# Install script for directory: /home/romwins/code/yandex_prac/git_projects/cpp-simple-vector/simple-vector
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/romwins/code/yandex_prac/study/simple_vector/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/romwins/code/yandex_prac/git_projects/cpp-simple-vector/simple-vector/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

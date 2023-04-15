@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/romwins/code/yandex_prac/study/simple_vector
+CMAKE_SOURCE_DIR = /home/romwins/code/yandex_prac/git_projects/cpp-simple-vector/simple-vector
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/romwins/code/yandex_prac/study/simple_vector/build
+CMAKE_BINARY_DIR = /home/romwins/code/yandex_prac/git_projects/cpp-simple-vector/simple-vector/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/romwins/code/yandex_prac/study/simple_vector/build/CMakeFiles /home/romwins/code/yandex_prac/study/simple_vector/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/romwins/code/yandex_prac/git_projects/cpp-simple-vector/simple-vector/build/CMakeFiles /home/romwins/code/yandex_prac/git_projects/cpp-simple-vector/simple-vector/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/romwins/code/yandex_prac/study/simple_vector/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/romwins/code/yandex_prac/git_projects/cpp-simple-vector/simple-vector/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

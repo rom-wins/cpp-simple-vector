@@ -2,6 +2,7 @@
 #include <cassert>
 #include <cstdlib>
 #include <algorithm>
+#include <utility>
 
 template <typename Type>
 class ArrayPtr {
@@ -26,6 +27,12 @@ public:
         raw_ptr_ = raw_ptr;
     }
 
+    ArrayPtr(ArrayPtr&& other) noexcept : raw_ptr_(std::exchange(other.raw_ptr_, nullptr)) {}
+
+    ArrayPtr& operator=(ArrayPtr&& other) noexcept {
+        std::swap(raw_ptr_, other.raw_ptr_);
+        return *this;
+    }
 
     // Запрещаем копирование
     ArrayPtr(const ArrayPtr&) = delete;

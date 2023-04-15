@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/romwins/code/yandex_prac/study/simple_vector/src/main.cpp" "CMakeFiles/main.dir/src/main.cpp.o" "gcc" "CMakeFiles/main.dir/src/main.cpp.o.d"
-  "/home/romwins/code/yandex_prac/study/simple_vector/src/simple_vector.cpp" "CMakeFiles/main.dir/src/simple_vector.cpp.o" "gcc" "CMakeFiles/main.dir/src/simple_vector.cpp.o.d"
-  "/home/romwins/code/yandex_prac/study/simple_vector/src/tests.cpp" "CMakeFiles/main.dir/src/tests.cpp.o" "gcc" "CMakeFiles/main.dir/src/tests.cpp.o.d"
+  "/home/romwins/code/yandex_prac/git_projects/cpp-simple-vector/simple-vector/src/main.cpp" "CMakeFiles/main.dir/src/main.cpp.o" "gcc" "CMakeFiles/main.dir/src/main.cpp.o.d"
+  "/home/romwins/code/yandex_prac/git_projects/cpp-simple-vector/simple-vector/src/simple_vector.cpp" "CMakeFiles/main.dir/src/simple_vector.cpp.o" "gcc" "CMakeFiles/main.dir/src/simple_vector.cpp.o.d"
+  "/home/romwins/code/yandex_prac/git_projects/cpp-simple-vector/simple-vector/src/tests.cpp" "CMakeFiles/main.dir/src/tests.cpp.o" "gcc" "CMakeFiles/main.dir/src/tests.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.
